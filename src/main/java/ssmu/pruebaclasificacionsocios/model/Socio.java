@@ -1,11 +1,11 @@
 package ssmu.pruebaclasificacionsocios.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
+
+//import java.util.Set;
 
 @Entity
 @Table(name = "socio")
@@ -26,7 +26,7 @@ public class Socio {
     @Column(name = "ciudad")
     private Integer ciudad;
 
-    @NotNull
+
     @Column(name = "usuario")
     private String usuario;
 
@@ -34,20 +34,33 @@ public class Socio {
     @Column(name = "clave")
     private String clave;
 
-    @NotNull
+
     @Column(name = "numero_de_servicios")
     private Integer numeroDeServicios;
 
-    @NotNull
+
     @Column(name = "promedio_de_calificacion")
     private Float promedioDeCalificacion;
 
-    @NotNull
+
     @Column(name = "numero_de_amonestaciones")
     private Integer numeroDeAmonestaciones;
 
-    @NotNull
+
     @Column(name = "numero_de_felicitaciones")
     private Integer numeroDeFelicitaciones;
 
+
+    //RELACIONES
+    /*@JsonIgnore
+    @OneToMany(mappedBy = "socio")
+    private Set<Vehiculo> socioVehiculoSet;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "socio", fetch = FetchType.LAZY)
+    private Set<Servicio> socioServicioSet;
+
+    @ManyToOne
+    @JoinColumn(name = "codigo_postal", updatable = false, insertable = false)
+    private Ciudad ciudad2;*/
 }

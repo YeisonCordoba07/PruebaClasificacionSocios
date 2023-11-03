@@ -26,4 +26,30 @@ public class SocioService {
         var socio = socioRepository.findSocioByCedula(cedula);
         return socio;
     }
+
+    public void deleteSocioByCedula(Integer cedula){
+        socioRepository.deleteSocioByCedula(cedula);
+
+    }
+
+    public void updateSocioByCedula(Integer cedula, String nombre){
+        Socio socio = new Socio();
+        var socioViejo = socioRepository.findSocioByCedula(cedula);
+        socioViejo.setNombre(nombre);
+        socio.setCedula(socioViejo.getCedula());
+        socio.setNombre(nombre);
+        socio.setCiudad(socioViejo.getCiudad());
+        socio.setUsuario(socioViejo.getUsuario());
+        socio.setClave(socioViejo.getClave());
+        socio.setNumeroDeServicios(socioViejo.getNumeroDeServicios());
+        socio.setPromedioDeCalificacion(socioViejo.getPromedioDeCalificacion());
+        socio.setNumeroDeAmonestaciones(socioViejo.getNumeroDeAmonestaciones());
+        socio.setNumeroDeFelicitaciones(socioViejo.getNumeroDeFelicitaciones());
+
+        socioRepository.save(socioViejo);
+    }
+
+    public void crearSocio(Socio socio){
+        socioRepository.save(socio);
+    }
 }
