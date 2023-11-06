@@ -32,4 +32,8 @@ public class Vehiculo {
     @Column(name = "porcentaje_agregado")
     private String porcentajeAgregado;
 
+    public Vehiculo() {
+
+    }
+
 }

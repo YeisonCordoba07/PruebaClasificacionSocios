@@ -25,4 +25,8 @@ public class Ciudad {
     @Nonnull
     @Column(name = "porcentaje_agregado")
     private String porcentajeAgregado;
+
+    public Ciudad() {
+
+    }
 }

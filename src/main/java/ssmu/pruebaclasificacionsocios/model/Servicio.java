@@ -48,5 +48,7 @@ public class Servicio {
     @Column(name = "id_ciudad")
     private Integer idCiudad;
 
+    public Servicio() {
 
+    }
 }

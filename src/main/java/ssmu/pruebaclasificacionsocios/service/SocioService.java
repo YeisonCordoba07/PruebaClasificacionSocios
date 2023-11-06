@@ -18,13 +18,11 @@ public class SocioService {
     }
 
     public List<Socio> findAll(){
-        var socios = socioRepository.findAll();
-        return socios;
+        return socioRepository.findAll();
     }
 
     public Socio findSocioByCedula(Integer cedula){
-        var socio = socioRepository.findSocioByCedula(cedula);
-        return socio;
+        return socioRepository.findSocioByCedula(cedula);
     }
 
     public void deleteSocioByCedula(Integer cedula){

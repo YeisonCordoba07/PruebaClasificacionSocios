@@ -9,7 +9,6 @@ public interface SocioRepository extends JpaRepository<Socio, Integer> {
 
     public Socio findSocioByCedula(Integer cedula);
 
-    //public void updateSocioByCedula(Integer cedula);
     public void deleteSocioByCedula(Integer cedula);
 
 
