@@ -1,11 +1,9 @@
 package ssmu.pruebaclasificacionsocios.model;
 
 import jakarta.annotation.Nonnull;
-//import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
-//import java.util.Set;
 
 @Entity
 @Table(name = "socio")
@@ -50,9 +48,6 @@ public class Socio {
     @Column(name = "numero_de_felicitaciones")
     private Integer numeroDeFelicitaciones;
 
-    public Socio() {
-
-    }
 
     //RELACIONES
     /*@JsonIgnore
