@@ -11,9 +11,10 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/socio")
 public class SocioController {
-    @Autowired
+
     private SocioService socioService;
 
+    @Autowired
     public SocioController(SocioService socioService) {
         this.socioService = socioService;
     }
@@ -38,8 +39,6 @@ public class SocioController {
     @PutMapping("/update")
     public ResponseEntity<String> updateSocioByCedula(@RequestBody Socio socio) {
         socioService.updateSocioByCedula(socio.getCedula(), socio.getNombre());
-        System.out.println(socio);
-        System.out.println("prueba");
         return ResponseEntity.ok("Actualizado exitoso");
     }
 

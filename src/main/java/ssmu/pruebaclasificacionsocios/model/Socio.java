@@ -1,9 +1,9 @@
 package ssmu.pruebaclasificacionsocios.model;
 
+import jakarta.annotation.Nonnull;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.antlr.v4.runtime.misc.NotNull;
 
 //import java.util.Set;
 
@@ -14,15 +14,15 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class Socio {
 
     @Id
-    @NotNull
+    @Nonnull
     @Column(name = "cedula")
     private Integer cedula;
 
-    @NotNull
+    @Nonnull
     @Column(name = "nombre")
     private String nombre;
 
-    @NotNull
+    @Nonnull
     @Column(name = "ciudad")
     private Integer ciudad;
 
@@ -30,7 +30,7 @@ public class Socio {
     @Column(name = "usuario")
     private String usuario;
 
-    @NotNull
+    @Nonnull
     @Column(name = "clave")
     private String clave;
 
