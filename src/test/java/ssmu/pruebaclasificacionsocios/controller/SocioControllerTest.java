@@ -88,6 +88,6 @@ public class SocioControllerTest {
 
             // Verificar que el método del servicio se llamó con el parámetro correcto
             verify(socioServiceMock, times(1)).findSocioByCedula(7000);
-        
+
     }
 }
