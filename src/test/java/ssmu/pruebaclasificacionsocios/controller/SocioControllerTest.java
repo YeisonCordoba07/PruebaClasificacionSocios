@@ -1,66 +1,89 @@
 package ssmu.pruebaclasificacionsocios.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import ssmu.pruebaclasificacionsocios.model.Socio;
-
 import ssmu.pruebaclasificacionsocios.service.SocioService;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
-
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-@SpringBootTest
+import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
-@AutoConfigureMockMvc
-class SocioControllerTest {
+public class SocioControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Mock
+    private SocioService socioServiceMock;
 
-    @MockBean
-    private SocioService socioService;
+    @InjectMocks
+    private SocioController socioController;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    void findSocioByCedula() throws Exception {
+    public void testFindSocioByCedula() throws Exception {
 
-// Configura el objeto Socio para simular el servicio
-        Socio socio = new Socio();
-        socio.setCedula(7000);
-        socio.setNombre("No Juan 2");
-        socio.setCiudad(12345);
-        socio.setUsuario("nojuanperez123");
-        socio.setClave("clave123");
-        socio.setNumeroDeServicios(5);
-        socio.setPromedioDeCalificacion(4.7f);
-        socio.setNumeroDeAmonestaciones(3);
-        socio.setNumeroDeFelicitaciones(1);
+        // Crea el objeto Socio simulado utilizando setters
+        // Es el que esta bueno
+        Socio socioEsperado = new Socio();
+        socioEsperado.setCedula(7000);
+        socioEsperado.setNombre("No Juan 2");
+        socioEsperado.setCiudad(12345);
+        socioEsperado.setUsuario("nojuanperez123");
+        socioEsperado.setClave("clave123");
+        socioEsperado.setNumeroDeServicios(5);
+        socioEsperado.setPromedioDeCalificacion(4.7F);
+        socioEsperado.setNumeroDeAmonestaciones(3);
+        socioEsperado.setNumeroDeFelicitaciones(1);
 
-        // Configura de servicio mock
-        when(socioService.findSocioByCedula(7000)).thenReturn(socio);
+        //Es el que se va a devolver
+        //Para que falle se hace diferente al de arriba (socioEsperado)
+        //Para que pase se hace igual
+        Socio socioDevuelto = new Socio();
+        socioDevuelto.setCedula(7000);
+        socioDevuelto.setNombre("No Juan 2");
+        socioDevuelto.setCiudad(12345);
+        socioDevuelto.setUsuario("nojuanperez123");
+        socioDevuelto.setClave("clave123");
+        socioDevuelto.setNumeroDeServicios(5);
+        socioDevuelto.setPromedioDeCalificacion(4.7F);
+        socioDevuelto.setNumeroDeAmonestaciones(3);
+        socioDevuelto.setNumeroDeFelicitaciones(1);
 
-        // Hace la solicitud GET simulada y valida el resultado
-        mockMvc.perform(get("/socio/findSocioByCedula/{cedula}", 7000)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.cedula").value(7000))
-                .andExpect(jsonPath("$.nombre").value("No Juan 2"))
-                .andExpect(jsonPath("$.ciudad").value(12345))
-                .andExpect(jsonPath("$.usuario").value("nojuanperez123"))
-                .andExpect(jsonPath("$.clave").value("clave123"))
-                .andExpect(jsonPath("$.numeroDeServicios").value(5))
-                .andExpect(jsonPath("$.promedioDeCalificacion").value(4.7))
-                .andExpect(jsonPath("$.numeroDeAmonestaciones").value(3))
-                .andExpect(jsonPath("$.numeroDeFelicitaciones").value(1));
+        // Configura el comportamiento del servicio falso
+        // Cuando se diga findSocioByCedula(7000), va a devolver socioDevuelto
+        when(socioServiceMock.findSocioByCedula(7000)).thenReturn(socioDevuelto);
+
+        // Ejecuta el método que se está probando - devuelve socioEsparado
+        ResponseEntity<Socio> respuesta = socioController.findSocioByCedula(7000);
+
+        // Verifica el resultado
+        Assertions.assertEquals(HttpStatus.OK, respuesta.getStatusCode());
+
+
+        Socio socioRespuesta = respuesta.getBody();
+        System.out.println("Socio respuesta" + respuesta.getBody());
+
+        /*assertEquals(socioEsperado.getCedula(), socioRespuesta.getCedula());
+        assertEquals(socioEsperado.getNombre(), socioRespuesta.getNombre());
+        assertEquals(socioEsperado.getCiudad(), socioRespuesta.getCiudad());
+        assertEquals(socioEsperado.getUsuario(), socioRespuesta.getUsuario());
+        assertEquals(socioEsperado.getClave(), socioRespuesta.getClave());
+        assertEquals(socioEsperado.getNumeroDeServicios(), socioRespuesta.getNumeroDeServicios());
+        assertEquals(socioEsperado.getPromedioDeCalificacion(), socioRespuesta.getPromedioDeCalificacion());
+        assertEquals(socioEsperado.getNumeroDeAmonestaciones(), socioRespuesta.getNumeroDeAmonestaciones());
+        assertEquals(socioEsperado.getNumeroDeFelicitaciones(), socioRespuesta.getNumeroDeFelicitaciones());*/
+
+        // Verificar que los valores del objeto Socio simulado sean iguales a los del objeto devuelto por el controlador
+        Assertions.assertEquals(socioEsperado, socioRespuesta);
+
+        // Verificar que el método del servicio se llamó con el parámetro correcto
+        verify(socioServiceMock, times(1)).findSocioByCedula(7000);
     }
 }

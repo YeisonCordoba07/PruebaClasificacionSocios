@@ -4,6 +4,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "socio")
@@ -63,4 +65,25 @@ public class Socio {
     @ManyToOne
     @JoinColumn(name = "codigo_postal", updatable = false, insertable = false)
     private Ciudad ciudad2;*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Socio socio = (Socio) o;
+        return Objects.equals(cedula, socio.cedula) &&
+                Objects.equals(nombre, socio.nombre) &&
+                Objects.equals(ciudad, socio.ciudad) &&
+                Objects.equals(usuario, socio.usuario) &&
+                Objects.equals(clave, socio.clave) &&
+                Objects.equals(numeroDeServicios, socio.numeroDeServicios) &&
+                Objects.equals(promedioDeCalificacion, socio.promedioDeCalificacion) &&
+                Objects.equals(numeroDeAmonestaciones, socio.numeroDeAmonestaciones) &&
+                Objects.equals(numeroDeFelicitaciones, socio.numeroDeFelicitaciones);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cedula, nombre, ciudad, usuario, clave, numeroDeServicios, promedioDeCalificacion, numeroDeAmonestaciones, numeroDeFelicitaciones);
+    }
 }
