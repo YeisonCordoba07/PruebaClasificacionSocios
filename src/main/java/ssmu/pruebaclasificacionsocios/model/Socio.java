@@ -48,7 +48,9 @@ public class Socio {
     @Column(name = "numero_de_felicitaciones")
     private Integer numeroDeFelicitaciones;
 
+    public Socio(){
 
+    }
     //RELACIONES
     /*@JsonIgnore
     @OneToMany(mappedBy = "socio")
