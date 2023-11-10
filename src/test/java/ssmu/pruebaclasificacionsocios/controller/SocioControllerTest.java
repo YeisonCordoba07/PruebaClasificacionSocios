@@ -4,18 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoSession;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ssmu.pruebaclasificacionsocios.model.Socio;
 import ssmu.pruebaclasificacionsocios.service.SocioService;
-import org.mockito.MockitoSession;
-import org.mockito.quality.Strictness;
 
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
