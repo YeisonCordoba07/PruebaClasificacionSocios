@@ -21,6 +21,10 @@ public class SocioService {
         return socioRepository.findAll();
     }
 
+    public List<Socio> findAllByNumeroDeServicios(Integer numeroDeServicios){
+        return socioRepository.findAllByNumeroDeServicios(numeroDeServicios);
+    }
+
     public Socio findSocioByCedula(Integer cedula){
         return socioRepository.findSocioByCedula(cedula);
     }

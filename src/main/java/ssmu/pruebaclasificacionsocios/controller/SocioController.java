@@ -25,6 +25,13 @@ public class SocioController {
         return ResponseEntity.ok(socio);
     }
 
+    @GetMapping ("/findAll/{servicioscompletados}")
+    public ResponseEntity<List<Socio>> findAll(@PathVariable Integer servicioscompletados){
+        var socio = socioService.findAllByNumeroDeServicios(servicioscompletados);
+        return ResponseEntity.ok(socio);
+    }
+
+
     @GetMapping ("/findSocioByCedula/{cedula}")
     public ResponseEntity<Socio> findSocioByCedula(@PathVariable Integer cedula){
         var socio = socioService.findSocioByCedula(cedula);
