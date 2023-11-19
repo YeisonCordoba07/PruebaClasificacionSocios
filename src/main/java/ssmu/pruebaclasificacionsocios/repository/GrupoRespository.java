@@ -7,4 +7,6 @@ import ssmu.pruebaclasificacionsocios.model.Grupo;
 @Repository
 public interface GrupoRespository extends JpaRepository<Grupo, Integer>{
 
+    public Grupo findGrupoByIdGrupo(Integer idGrupo);
+
 }

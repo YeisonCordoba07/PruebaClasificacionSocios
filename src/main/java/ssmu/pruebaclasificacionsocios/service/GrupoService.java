@@ -28,4 +28,8 @@ public class GrupoService {
     public List<Grupo> findAll(){
         return grupoRepository.findAll();
     }
+
+    public Grupo findGrupoByIdGrupo(Integer idGrupo){
+        return grupoRepository.findGrupoByIdGrupo(idGrupo);
+    }
 }

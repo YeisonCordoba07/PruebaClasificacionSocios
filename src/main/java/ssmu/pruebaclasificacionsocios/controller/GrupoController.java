@@ -10,6 +10,8 @@ import ssmu.pruebaclasificacionsocios.service.GrupoSocioService;
 import ssmu.pruebaclasificacionsocios.service.SocioService;
 
 import java.util.List;
+import java.util.Objects;
+
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/grupo")
@@ -33,27 +35,33 @@ public class GrupoController {
 
     @PostMapping("/crearGrupo")
     public ResponseEntity<String> crearUsuario(@RequestBody Grupo grupo){
-        grupoService.crearGrupo(grupo);
-        System.out.println("contador: " + grupo.getValorCriterio());
-        var socios = socioService.findAllByNumeroDeServicios(grupo.getValorCriterio());
 
-        System.out.println("Número de socios encontrados: " + socios.size());
-        System.out.println("Socios encontrados: " + socios);
+        var grupoMySQL = grupoService.findGrupoByIdGrupo(grupo.getIdGrupo());
 
-        var ultimogruposocio = grupoSocioService.findUltimoSocioCreado();
-        contadorGrupoSocio = ultimogruposocio.getIdSocio();
-        for (Socio socio : socios) {
-            GrupoSocio grupoSocio = new GrupoSocio();
-            grupoSocio.setIdSocioGrupo(contadorGrupoSocio + 1);
-            grupoSocio.setIdGrupo(grupo.getIdGrupo());
-            grupoSocio.setIdSocio(socio.getCedula());
+        if(grupoMySQL == null || !Objects.equals(grupoMySQL.getIdGrupo(), grupo.getIdGrupo())){
+            grupoService.crearGrupo(grupo);
+            System.out.println("contador: " + grupo.getValorCriterio());
+            var socios = socioService.findAllByNumeroDeServicios(grupo.getValorCriterio());
 
-            // Guardar el GrupoSocio en la base de datos
-            grupoSocioService.crearGrupoSocio(grupoSocio);
-            contadorGrupoSocio = contadorGrupoSocio + 1;
+            System.out.println("Número de socios encontrados: " + socios.size());
+            System.out.println("Socios encontrados: " + socios);
+
+            var ultimogruposocio = grupoSocioService.findUltimoSocioCreado();
+            contadorGrupoSocio = ultimogruposocio.getIdSocio();
+            for (Socio socio : socios) {
+                GrupoSocio grupoSocio = new GrupoSocio();
+                grupoSocio.setIdSocioGrupo(contadorGrupoSocio + 1);
+                grupoSocio.setIdGrupo(grupo.getIdGrupo());
+                grupoSocio.setIdSocio(socio.getCedula());
+
+                // Guardar el GrupoSocio en la base de datos
+                grupoSocioService.crearGrupoSocio(grupoSocio);
+                contadorGrupoSocio = contadorGrupoSocio + 1;
+            }
+
+            return ResponseEntity.ok("Creación exitoso");
         }
-
-        return ResponseEntity.ok("Creación exitoso");
+        return ResponseEntity.ok("Grupo ya existe");
     }
 
     @GetMapping ("/findAll")
